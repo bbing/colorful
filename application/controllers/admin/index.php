@@ -18,7 +18,10 @@ class Index extends CI_Controller
 		{
 			redirect(site_url(LOGIN_URL));
 		}
-		print_r($this->session->all_userdata());
+		$this->load->model('Admin_Menu_Model','menu');
+		$list = $this->menu->getMenu(array('is_del'=>'0'));
+		$data['tem'] = 'admin/index/index';
+		$this->load->view('admin/layout', $data);
 	}
 	
 	public function login()
@@ -32,10 +35,11 @@ class Index extends CI_Controller
 			$flag = $this->account->login($this->input->post('username'),$this->input->post('password'),$this->input->ip_address());
 			if ($flag) {
 				$arr = array(
-						'account_id'        => $flag-> account_id,
-						'username'          => $flag-> username,
-						'last_login_time'   => $flag-> login_time,
-						'last_login_ip'     => $flag-> login_ip,
+						'account_id'        => $flag->account_id,
+						'username'          => $flag->username,
+						'nickname'          => $flag->nickname,
+						'last_login_time'   => $flag->login_time,
+						'last_login_ip'     => $flag->login_ip,
 						'login_time'        => time(),
 						'login_ip'          => $this->input->ip_address(),
 				);
@@ -49,5 +53,11 @@ class Index extends CI_Controller
 		} else {
 			$this->load->view('admin/login');
 		}
+	}
+	
+	public function logout()
+	{
+		$this->session->sess_destroy();
+		redirect(site_url(LOGIN_URL));
 	}
 }

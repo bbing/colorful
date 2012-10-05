@@ -17,6 +17,16 @@ class MY_Model extends CI_Model
 		return $this->db->count_all_results($this->_tableName);
 	}
 	
+	public function select($field='*',$map='',$offset='',$limit=0,$order='')
+	{
+	
+		$this->db->select($field);
+		if (!empty($offset)) $this->db->limit($offset,$limit);
+		if(!empty($order)==true)  $this->db->order_by($order);
+		if ($map!='') $query = $this->db->get_where($this->_tableName, $map);
+		else $query = $this->db->get( $this->_tableName );
+		return $query;
+	}
 	
 	/**
 	 * 通用插入

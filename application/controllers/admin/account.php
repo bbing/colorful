@@ -7,11 +7,7 @@
  */
 class Account extends Admin_Controller
 {
-	protected $defaultModel ='Admin_Account_Model';
-	protected $tpl = array('index'=>array('admin/account/index',true),
-			'edit' =>array('admin/account/edit',true),
-			'editmy' =>array('admin/account/editmy',true),
-			'add'  =>array('admin/account/add',true));
+	protected $defaultModel ='Admin_Account_Model'; 
 	
 	public function beforeAdd()
 	{
